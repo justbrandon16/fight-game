@@ -1,5 +1,12 @@
 let nextButton = document.getElementById('next-button');
 nextButton.hidden = true;
+let attackButton = document.getElementById('attack-button');
+let upButton = document.getElementById('up-button');
+let downButton = document.getElementById('down-button');
+let shopButton = document.getElementById('shop-button');
+let towerButton = document.getElementById('tower-button');
+
+
 
 let player = {
 	health: 1000,
@@ -7,7 +14,8 @@ let player = {
 	base: 100,
 	critc: 0.1,
 	critm: 1.5,
-	gold: 500
+	gold: 500,
+	maxfloor: 0
 
 }
 document.getElementById("hud-player-health").innerHTML = player.health;
@@ -55,7 +63,6 @@ document.getElementById("mob-name").innerHTML = mobname[mobnum];
 
 const attack = () => {
 	let gameMessage = document.getElementById('game-message');
-
 	let playerAttack = detAttack(player.base,player.power);
 	let opponentAttack = detAttack(opponent.base,opponent.power);
 	
@@ -79,9 +86,9 @@ const attack = () => {
 	var gametxt=('-'+playerAttack+' HP\n\n-'+opponentAttack+' HP');
 	gameMessage.innerText = gametxt;
 	printToScreen();
-	document.getElementById('attack-button').disabled=true;
+	attackButton.disabled=true;
 	setTimeout(() => {
-	document.getElementById('attack-button').disabled=false;
+	attackButton.disabled=false;
 	}, 500)
 
 	if (isGameOver(opponent.health)){
@@ -101,12 +108,14 @@ const attack = () => {
 
 const endFight = (message) => {
 	document.getElementById('game-message').innerText = message;
-	document.getElementById('attack-button').disabled=true;
+	attackButton.disabled=true;
 
 	setTimeout(() => {
-	document.getElementById('attack-button').hidden=true;
-	document.getElementById('next-button').hidden=false;
-	document.getElementById('next-button').disabled=false;
+	attackButton.hidden=true;
+	nextButton.hidden=false;
+	nextButton.disabled=false;
+	upButton.disabled=true;
+	downButton.disabled=true;
 	}, 500)
 }
 
@@ -115,15 +124,14 @@ const next = () => {
 	nextButton.disabled=true;
 	setTimeout(() => {
 	document.getElementById('game-message').innerText='';
+
+
 	// player.health=10000;
 
 	//post-fight rewards
 	player.gold += Math.floor((((3+Math.random())/4)*goldloot[mobnum]));
-	// player.gold += goldloot[mobnum];
-
-
+	player.maxfloor += 1;
 	mobnum += 1;
-
 	opponent.health=hp[mobnum];
 	opponent.power=atk[mobnum];
 
@@ -133,6 +141,8 @@ const next = () => {
 	nextButton.hidden =true;
 	attackButton.disabled=false;
 	attackButton.hidden =false;
+	upButton.disabled=false;
+	downButton.disabled=false;
 	}, 500)
 }
 
@@ -151,22 +161,88 @@ const printToScreen = () => {
 }
 
 const moveUp = () => {
+	if (mobnum<player.maxfloor) {
+	upButton.disabled=true;
+	downButton.disabled=true;
+	document.getElementById('game-message').innerText='TRAVELLING ...';
+	setTimeout(() => {document.getElementById('game-message').innerText='';
 	mobnum += 1;
 	opponent.health=hp[mobnum];
 	opponent.power=atk[mobnum];
 	document.getElementById("mob-name").innerHTML = mobname[mobnum];
 	printToScreen();
-
+	upButton.disabled=false;
+	downButton.disabled=false;
+	}, 1000)
+	} else {
+	upButton.disabled=true;
+	document.getElementById('game-message').innerText='YOU SHALL NOT PASS!';
+	setTimeout(() => {document.getElementById('game-message').innerText=''
+	upButton.disabled=false;
+	}, 1000)
+	}
 }
+
+	setTimeout(() => {}, 500)
+
 const moveDown = () => {
 	if (mobnum >0) {
+	upButton.disabled=true;
+	downButton.disabled=true;
+	document.getElementById('game-message').innerText='TRAVELLING ...';
+	setTimeout(() => {
+	document.getElementById('game-message').innerText='';
 	mobnum -= 1;
 	opponent.health=hp[mobnum];
 	opponent.power=atk[mobnum];
 	document.getElementById("mob-name").innerHTML = mobname[mobnum];
 	printToScreen();
-
+	upButton.disabled=false;
+	downButton.disabled=false;
+	}, 1000)
+	} else {
+	downButton.disabled=true;
+	document.getElementById('game-message').innerText='YOU ARE ALREADY AT THE LOWEST FLOOR';
+	setTimeout(() => {document.getElementById('game-message').innerText=''
+	downButton.disabled=false;
+	}, 1000)
 	}
 }
+
+const shop = () => {
+	upButton.disabled=true;
+	downButton.disabled=true;
+	document.getElementById('game-message').innerText='TRAVELLING ...';
+	setTimeout(() => {
+	document.getElementById('game-message').hidden=true;
+	document.getElementById('opponent').hidden=true;
+	document.getElementById('player').hidden=true;
+	shopButton.disabled=true;
+	towerButton.disabled=false;
+	attackButton.hidden=true;
+	printToScreen();
+	}, 1000)
+}
+
+const tower = () => {
+	upButton.disabled=true;
+	downButton.disabled=true;
+	document.getElementById('game-message').hidden=false;
+	document.getElementById('game-message').innerText='TRAVELLING ...';
+	setTimeout(() => {
+	document.getElementById('game-message').innerText='';
+	document.getElementById('opponent').hidden=false;
+	document.getElementById('player').hidden=false;
+	attackButton.hidden=false;
+	printToScreen();
+	upButton.disabled=false;
+	downButton.disabled=false;
+	shopButton.disabled=false;
+	towerButton.disabled=true;
+	}, 1000)
+}
+
+
+
 
 printToScreen();

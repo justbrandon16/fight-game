@@ -97,7 +97,7 @@
   /*border-radius: 6px;*/
   /*color: #fff;*/
   font-family: 'Oswald';
-  font-size: 20px;
+  font-size: 18px;
   text-decoration: none;
   border: none;
 }
@@ -114,10 +114,46 @@
   /*border-radius: 6px;*/
   /*color: #fff;*/
   font-family: 'Oswald';
-  font-size: 20px;
+  font-size: 18px;
   text-decoration: none;
   border: none;
 }
+
+#shop-button {
+	top:600px;
+	left:172.5px;
+	position: absolute;
+
+  background-color: #bbb;
+  padding: .5;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  /*border-radius: 6px;*/
+  /*color: #fff;*/
+  font-family: 'Oswald';
+  font-size: 18px;
+  text-decoration: none;
+  border: none;
+}
+
+#tower-button {
+	top:600px;
+	left:575px;
+	position: absolute;
+
+  background-color: #bbb;
+  padding: .5;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  /*border-radius: 6px;*/
+  /*color: #fff;*/
+  font-family: 'Oswald';
+  font-size: 18px;
+  text-decoration: none;
+  border: none;
+}
+
+
 
 
 
