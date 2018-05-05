@@ -5,7 +5,44 @@ let upButton = document.getElementById('up-button');
 let downButton = document.getElementById('down-button');
 let shopButton = document.getElementById('shop-button');
 let towerButton = document.getElementById('tower-button');
+let shp = document.getElementById("shop");
+let b1 = document.getElementById("button-1");let b2 = document.getElementById("button-2");let b3 = document.getElementById("button-3");let b4 = document.getElementById("button-4");
+b1.hidden=true;b2.hidden=true;b3.hidden=true;b4.hidden=true;shp.hidden = true;
 
+
+var ctx=shp.getContext("2d");
+
+ctx.fillStyle="red"; ctx.fillRect(60,20,50,100);
+ctx.fillStyle='blue'; ctx.fillRect(200,20,50,100);
+ctx.fillStyle='green'; ctx.fillRect(340,20,50,100);
+ctx.fillStyle='white'; ctx.fillRect(480,20,50,100);
+
+var item = [
+	'LIGHTWEIGHT RUNIC CLOTH',
+	'PRAETOR EXOSKELETON',
+	'CHALLENGER ARMOR',
+	'PURIFIER SUIT'
+]
+
+var itemstat = [
+	'+100 HP, +0 armor',
+	'+150 HP, +10 armor',
+	'+0 HP, +30 armor',
+	'+500 HP, +30 armor'
+]
+
+var cost = [
+	'1000 gold',
+	'5000 gold',
+	'25000 gold',
+	'100000 gold'
+]
+
+const draw = (i) => {
+	document.getElementById('shopdat1').innerText=item[i];
+	document.getElementById('shopdat3').innerText=cost[i];
+	document.getElementById('shopdat2').innerText=itemstat[i];
+}
 
 
 let player = {
@@ -44,7 +81,7 @@ var mobname = [
 var hp = [1000,5000,10000,2500,5000,10000,6000,20000,50000,30000]
 var atk = [10,30,50,100,150,250,450,1000,2000,10000];
 var goldloot = [1000,5000,10000,15000,25000,50000,80000,130000,250000,450000]
-var mobnum = 9;
+var mobnum = 0;
 
 let opponent = {
 	health: 1000,
@@ -114,8 +151,7 @@ const endFight = (message) => {
 	attackButton.hidden=true;
 	nextButton.hidden=false;
 	nextButton.disabled=false;
-	upButton.disabled=true;
-	downButton.disabled=true;
+	disablevmove();
 	}, 500)
 }
 
@@ -141,8 +177,7 @@ const next = () => {
 	nextButton.hidden =true;
 	attackButton.disabled=false;
 	attackButton.hidden =false;
-	upButton.disabled=false;
-	downButton.disabled=false;
+	enablevmove();
 	}, 500)
 }
 
@@ -162,8 +197,7 @@ const printToScreen = () => {
 
 const moveUp = () => {
 	if (mobnum<player.maxfloor) {
-	upButton.disabled=true;
-	downButton.disabled=true;
+	disablevmove();
 	document.getElementById('game-message').innerText='TRAVELLING ...';
 	setTimeout(() => {document.getElementById('game-message').innerText='';
 	mobnum += 1;
@@ -171,8 +205,7 @@ const moveUp = () => {
 	opponent.power=atk[mobnum];
 	document.getElementById("mob-name").innerHTML = mobname[mobnum];
 	printToScreen();
-	upButton.disabled=false;
-	downButton.disabled=false;
+	enablevmove();
 	}, 1000)
 	} else {
 	upButton.disabled=true;
@@ -187,8 +220,7 @@ const moveUp = () => {
 
 const moveDown = () => {
 	if (mobnum >0) {
-	upButton.disabled=true;
-	downButton.disabled=true;
+	disablevmove();
 	document.getElementById('game-message').innerText='TRAVELLING ...';
 	setTimeout(() => {
 	document.getElementById('game-message').innerText='';
@@ -197,8 +229,7 @@ const moveDown = () => {
 	opponent.power=atk[mobnum];
 	document.getElementById("mob-name").innerHTML = mobname[mobnum];
 	printToScreen();
-	upButton.disabled=false;
-	downButton.disabled=false;
+	enablevmove();
 	}, 1000)
 	} else {
 	downButton.disabled=true;
@@ -210,8 +241,7 @@ const moveDown = () => {
 }
 
 const shop = () => {
-	upButton.disabled=true;
-	downButton.disabled=true;
+	disablevmove();
 	document.getElementById('game-message').innerText='TRAVELLING ...';
 	setTimeout(() => {
 	document.getElementById('game-message').hidden=true;
@@ -220,13 +250,19 @@ const shop = () => {
 	shopButton.disabled=true;
 	towerButton.disabled=false;
 	attackButton.hidden=true;
+	b1.hidden=false;
+	b2.hidden=false;
+	b3.hidden=false;
+	b4.hidden=false;
+	shp.hidden=false;
 	printToScreen();
-	}, 1000)
+	}, 0)
 }
 
 const tower = () => {
-	upButton.disabled=true;
-	downButton.disabled=true;
+	disablevmove();
+	b1.hidden=true;b2.hidden=true;b3.hidden=true;b4.hidden=true;
+	shp.hidden=true;
 	document.getElementById('game-message').hidden=false;
 	document.getElementById('game-message').innerText='TRAVELLING ...';
 	setTimeout(() => {
@@ -235,12 +271,23 @@ const tower = () => {
 	document.getElementById('player').hidden=false;
 	attackButton.hidden=false;
 	printToScreen();
-	upButton.disabled=false;
-	downButton.disabled=false;
+	enablevmove();
 	shopButton.disabled=false;
 	towerButton.disabled=true;
+
 	}, 1000)
 }
+
+const enablevmove = () => {
+	upButton.disabled=false;
+	downButton.disabled=false;
+}
+const disablevmove = () => {
+	upButton.disabled=true;
+	downButton.disabled=true;
+}
+
+
 
 
 

@@ -30,6 +30,13 @@
 
 	<div id='player'><h2>YOUR HEALTH <br><span id='player-health'></span></h2></div>
 
+	<div id='shop1'><span id='shopdat1'></span></div>
+	<div id='shop2'><span id='shopdat2'></span></div>
+	<div id='shop3'><span id='shopdat3'></span></div>
+
+
+
+
 	<button id='attack-button' onclick='attack()'>Lightcannon shot</button>
 	<button id='next-button' onclick='next()'>Next floor</button>
 
@@ -38,7 +45,14 @@
 	<button id='shop-button' onclick='shop()'>Go to shop</button>
 	<button id='tower-button' onclick='tower()'>Return to tower</button>
 
+	<button id='button-1' onmouseover="draw(0)" ='draw1()'>1</button>
+	<button id='button-2' onmouseover='draw(1)'>2</button>
+	<button id='button-3' onmouseover='draw(2)'>3</button>
+	<button id='button-4' onmouseover='draw(3)'>4</button>
 
+
+
+	<canvas id='shop' width='600', height='130'></canvas>
 
 
 
