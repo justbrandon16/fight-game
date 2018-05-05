@@ -2,11 +2,12 @@ let nextButton = document.getElementById('next-button');
 nextButton.hidden = true;
 
 let player = {
-	health: 10000,
-	power: 1000,
+	health: 1000,
+	power: 10000,
 	base: 100,
 	critc: 0.1,
-	critm: 1.5
+	critm: 1.5,
+	gold: 500
 
 }
 document.getElementById("hud-player-health").innerHTML = player.health;
@@ -15,6 +16,7 @@ document.getElementById("hud-player-power").innerHTML = player.power;
 document.getElementById("hud-player-total").innerHTML = player.base+player.power;
 document.getElementById("hud-player-critc").innerHTML = player.critc;
 document.getElementById("hud-player-critm").innerHTML = player.critm;
+document.getElementById("hud-player-gold").innerHTML = player.gold;
 
 
 
@@ -31,39 +33,18 @@ var mobname = [
 	'Ifrit - The infernal djinn',
 	'JARRAXUS - Demon Lord of the Burning Legion'
 ]
-var hp = [
-	1000,
-	5000,
-	10000,
-	2500,
-	5000,
-	10000,
-	6000,
-	20000,
-	50000,
-	30000
-]
-var atk = [
-	10,
-	20,
-	30,
-	40,
-	50,
-	60,
-	70,
-	80,
-	90,
-	100
-];
-
+var hp = [1000,5000,10000,2500,5000,10000,6000,20000,50000,30000]
+var atk = [10,30,50,100,150,250,450,1000,2000,10000];
+var goldloot = [1000,5000,10000,15000,25000,50000,80000,130000,250000,450000]
 var mobnum = 0;
 
 let opponent = {
 	health: 1000,
 	power: 10,
 	base: 5,
-	gold: 10
+	gold: 1000
 }
+
 document.getElementById("mob-name").innerHTML = mobname[mobnum];
 
 
@@ -84,13 +65,15 @@ const attack = () => {
 	// } else {playerAttack===detAttack*critm}
 
 	opponent.health -= playerAttack
-	player.health -= opponentAttack;
+
 
 	if (opponent.health<0) {
 		opponent.health=0;
+	} else {	player.health -= opponentAttack;
 	}
 	if (player.health<0) {
-		player.health=0;
+		player.health=0
+		mobnum -=1;
 	}
 
 	var gametxt=('-'+playerAttack+' HP\n\n-'+opponentAttack+' HP');
@@ -132,13 +115,20 @@ const next = () => {
 	nextButton.disabled=true;
 	setTimeout(() => {
 	document.getElementById('game-message').innerText='';
-	player.health=10000;
+	// player.health=10000;
+
+	//post-fight rewards
+	player.gold += Math.floor((((3+Math.random())/4)*goldloot[mobnum]));
+	// player.gold += goldloot[mobnum];
+
 
 	mobnum += 1;
+
 	opponent.health=hp[mobnum];
 	opponent.power=atk[mobnum];
 
 	document.getElementById("mob-name").innerHTML = mobname[mobnum];
+	document.getElementById("hud-player-gold").innerHTML = player.gold;
 	printToScreen();
 	nextButton.hidden =true;
 	attackButton.disabled=false;
@@ -147,7 +137,7 @@ const next = () => {
 }
 
 const detAttack = (base,power) => {
-	return Math.floor(base+(power*(1.2+Math.random())/2));
+	return Math.floor(base+(power*(3+Math.random())/4));
 }
 
 const isGameOver = (health) => {
@@ -158,6 +148,25 @@ const printToScreen = () => {
 	document.getElementById('player-health').innerText = player.health+' HP';
 	document.getElementById('opponent-health').innerText = opponent.health+' HP';
 
+}
+
+const moveUp = () => {
+	mobnum += 1;
+	opponent.health=hp[mobnum];
+	opponent.power=atk[mobnum];
+	document.getElementById("mob-name").innerHTML = mobname[mobnum];
+	printToScreen();
+
+}
+const moveDown = () => {
+	if (mobnum >0) {
+	mobnum -= 1;
+	opponent.health=hp[mobnum];
+	opponent.power=atk[mobnum];
+	document.getElementById("mob-name").innerHTML = mobname[mobnum];
+	printToScreen();
+
+	}
 }
 
 printToScreen();
