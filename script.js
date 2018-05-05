@@ -10,7 +10,7 @@ let towerButton = document.getElementById('tower-button');
 
 let player = {
 	health: 1000,
-	power: 10000,
+	power: 100000,
 	base: 100,
 	critc: 0.1,
 	critm: 1.5,
@@ -30,21 +30,21 @@ document.getElementById("hud-player-gold").innerHTML = player.gold;
 
 
 var mobname = [
-	'Agrith-Naar - Level 100 Greater Demon',
-	'Barakiel - Angel of Lightning',
-	'Chthon - Demonic Elder God',
-	'Demogorgon - Man with no Face',
-	'Errtu - Balor of the tanarri',
-	'Furfur - Great Earl of Hell',
-	'Gothmog - Lord of Balrogs',
-	'Hastur - The Unspeakable One',
-	'Ifrit - The infernal djinn',
-	'JARRAXUS - Demon Lord of the Burning Legion'
+	'F1 - Agrith-Naar - Level 100 Greater Demon',
+	'F2 - Barakiel - Angel of Lightning',
+	'F3 - Chthon - Demonic Elder God',
+	'F4 - Demogorgon - Man with no Face',
+	'F5 - Errtu - Balor of the tanarri',
+	'F6 - Furfur - Great Earl of Hell',
+	'F7 - Gothmog - Lord of Balrogs',
+	'F8 - Hastur - The Unspeakable One',
+	'F9 - Ifrit - The infernal djinn',
+	'Tower top - JARRAXUS - Demon Lord of the Burning Legion'
 ]
 var hp = [1000,5000,10000,2500,5000,10000,6000,20000,50000,30000]
 var atk = [10,30,50,100,150,250,450,1000,2000,10000];
 var goldloot = [1000,5000,10000,15000,25000,50000,80000,130000,250000,450000]
-var mobnum = 0;
+var mobnum = 9;
 
 let opponent = {
 	health: 1000,
